@@ -21,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -57,61 +58,83 @@ fun UserItem(user: UserDto) {
             .fillMaxWidth()
             .padding(16.dp)
     ) {
-        //Photo row
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(1f)
-                .clip(CircleShape)
-                .border(1.dp, MaterialTheme.colorScheme.onSurface, CircleShape),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        )
-        {
-            AsyncImage(
-                model = user.picture.large,
-                contentDescription = "Profile photo",
-                modifier= Modifier
-                    .border(
-                        width = 5.dp,
-                        color = MaterialTheme.colorScheme.secondary,
-                        shape = CircleShape
-                    )
-                    .clip(CircleShape)
-                    .aspectRatio(1f, true)
-            )
-        }
-
+        //Image row
+        RowWithUserPhoto(user)
         //Name row
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = "${user.name.title}. ${user.name.first} ${user.name.last}",
-                style = MaterialTheme.typography.titleLarge
-
-            )
-        }
+        RowWithUserInformation(user)
         //Nat row
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = user.nat,
-                style = MaterialTheme.typography.titleMedium
-            )
-        }
-        Divider(
-            color = MaterialTheme.colorScheme.outline,
-            thickness = 1.dp,
-            modifier = Modifier
-                .height(1.dp)
-                .padding(start = 10.dp)
+        RowWithUserNationality(user)
+        //Divider
+        DivisorLine()
+    }
+}
+@Composable
+fun RowWithUserPhoto(user: UserDto){
+    //Photo row
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(1f)
+            .clip(CircleShape)
+            .border(1.dp, MaterialTheme.colorScheme.onSurface, CircleShape),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    )
+    {
+        AsyncImage(
+            model = user.picture.large,
+            contentDescription = "Profile photo",
+            modifier= Modifier
+                .border(
+                    width = 5.dp,
+                    color = MaterialTheme.colorScheme.secondary,
+                    shape = CircleShape
+                )
+                .clip(CircleShape)
+                .aspectRatio(1f, true)
         )
     }
+}
+
+@Composable
+fun RowWithUserInformation(user: UserDto){
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = "${user.name.title}. ${user.name.first} ${user.name.last}",
+            style = MaterialTheme.typography.titleLarge,
+            overflow = TextOverflow.Ellipsis,
+            softWrap = false
+
+        )
+    }
+}
+
+@Composable
+fun RowWithUserNationality(user: UserDto){
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = user.nat,
+            style = MaterialTheme.typography.titleMedium
+        )
+    }
+}
+
+@Composable
+fun DivisorLine(){
+    Divider(
+        color = MaterialTheme.colorScheme.outline,
+        thickness = 1.dp,
+        modifier = Modifier
+            .height(1.dp)
+            .padding(start = 10.dp)
+    )
 }
