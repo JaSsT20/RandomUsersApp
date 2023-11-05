@@ -7,10 +7,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -95,19 +98,21 @@ fun UserItem(user: UserDto) {
         //Nat row
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .border(
-                    1.dp,
-                    MaterialTheme.colorScheme.onSurface,
-                    shape = CircleShape
-                ),
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
             Text(
                 text = user.nat,
-                style = MaterialTheme.typography.titleSmall
+                style = MaterialTheme.typography.titleMedium
             )
         }
+        Divider(
+            color = MaterialTheme.colorScheme.outline,
+            thickness = 1.dp,
+            modifier = Modifier
+                .height(1.dp)
+                .padding(start = 10.dp)
+        )
     }
 }
